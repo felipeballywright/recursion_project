@@ -33,12 +33,23 @@
 
 // MERGE SORT
 
-const allTheSortedArr = [];
-
 function mergeSort(arr){
 
+    function merge(a, b){
+        let result = []
+        while(a.length && b.length){
+            if(a[0] > b[0]){
+                result.push(b.shift());
+            } else {
+                result.push(a.shift());
+            }
+        }
+        result = result.concat(a, b);
+        return result
+    }
+
     if(arr.length > 2){
-        console.log("arr.length > 2");
+      console.log("arr.length > 2");
       const mid = Math.ceil(arr.length / 2);
 
       const firstHalf = arr.slice(0, mid);
@@ -47,17 +58,21 @@ function mergeSort(arr){
       const secondHalf = arr.slice(mid);
       console.log("2nd half is", secondHalf);
 
-      mergeSort(firstHalf);
-      mergeSort(secondHalf);
-    } else if(arr.length === 2){
-        let sortedArr = [];
-        arr[0] > arr[1] ? sortedArr = [arr[1], arr[0]] : sortedArr = [arr[0], arr[1]];
+      const leftHalf = mergeSort(firstHalf);
+      const rightHalf = mergeSort(secondHalf);
 
-        console.log("The sorted arr is", sortedArr);
-        return sortedArr
+      return merge(leftHalf, rightHalf);
+    } else if(arr.length === 1){
+        return arr
     }
 }
 
 // const testOne = [4, 2, 5, 1];
 const testTwo = [3, 2, 1, 13, 8, 5, 0, 1];
-mergeSort(testTwo);
+console.log(mergeSort(testTwo));
+
+// let sortedArr = [];
+//         arr[0] > arr[1] ? sortedArr = [arr[1], arr[0]] : sortedArr = [arr[0], arr[1]];
+
+//         console.log("The sorted arr is", sortedArr);
+//         return sortedArr
