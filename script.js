@@ -36,7 +36,8 @@
 function mergeSort(arr){
 
     function merge(a, b){
-        let result = []
+        console.log("Running merge with", a, b);
+        let result = [];
         while(a.length && b.length){
             if(a[0] > b[0]){
                 result.push(b.shift());
@@ -49,19 +50,21 @@ function mergeSort(arr){
     }
 
     if(arr.length > 2){
-      console.log("arr.length > 2");
       const mid = Math.ceil(arr.length / 2);
-
       const firstHalf = arr.slice(0, mid);
-      console.log("1st half is", firstHalf);
-
       const secondHalf = arr.slice(mid);
-      console.log("2nd half is", secondHalf);
+      console.log("1st and 2nd", firstHalf, secondHalf);
 
       const leftHalf = mergeSort(firstHalf);
       const rightHalf = mergeSort(secondHalf);
+      console.log("left and right", leftHalf, rightHalf);
 
-      return merge(leftHalf, rightHalf);
+      const bothHalves = merge(leftHalf, rightHalf);
+      console.log("Both halves", bothHalves);
+      return bothHalves
+    } else if (arr.length === 2) {
+        console.log("The array length is 2");
+        return arr[0] > arr[1] ? [arr[1], arr[0]] : arr;
     } else if(arr.length === 1){
         return arr
     }
@@ -70,9 +73,3 @@ function mergeSort(arr){
 // const testOne = [4, 2, 5, 1];
 const testTwo = [3, 2, 1, 13, 8, 5, 0, 1];
 console.log(mergeSort(testTwo));
-
-// let sortedArr = [];
-//         arr[0] > arr[1] ? sortedArr = [arr[1], arr[0]] : sortedArr = [arr[0], arr[1]];
-
-//         console.log("The sorted arr is", sortedArr);
-//         return sortedArr
